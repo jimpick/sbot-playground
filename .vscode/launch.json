@@ -8,7 +8,17 @@
       "type": "node",
       "request": "launch",
       "name": "open-client",
-      "program": "${workspaceFolder}/open-client.js"
+      "program": "${workspaceFolder}/src/open-client.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "read-log",
+      "runtimeArgs": [
+        "-r",
+        "esm"
+      ],
+      "program": "${workspaceFolder}/src/read-log.js"
     }
   ]
 }
