@@ -20,7 +20,6 @@ async function run () {
       console.log('\n' + text + '\n\n')
       await delay(1000)
     }
-    ssb.close()
   } catch (err) {
     console.error('Exception', err)
   }

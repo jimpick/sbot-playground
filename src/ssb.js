@@ -17,7 +17,7 @@ export default class SSB {
   feed () {
     const source = pull(
       this.sbot.createFeedStream({
-        gt: Date.now() - 60 * 60 * 1000, // 1 hour
+        gt: Date.now() - 4 * 60 * 60 * 1000, // 4 hours
         live: true }),
       pull.filter(data => data.value),
       pull.filter(data => data.value.content.type === 'post'),

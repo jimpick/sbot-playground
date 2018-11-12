@@ -1,14 +1,13 @@
 {
-  "name": "sbot-test",
+  "name": "sbot-playground",
   "version": "1.0.0",
-  "description": "",
-  "main": "open-client.js",
+  "description": "Playing around with scuttlebutt APIs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node -r esm src/read-feed-stream"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Jim Pick (@jimpick)",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
     "delay": "^4.1.0",
