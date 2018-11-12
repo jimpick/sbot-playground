@@ -15,12 +15,14 @@ export default class SSB {
   }
 
   feed () {
+    const maxTimestamp = Date.now() + 5 * 60 * 1000
     const source = pull(
       this.sbot.createFeedStream({
         gt: Date.now() - 4 * 60 * 60 * 1000, // 4 hours
         live: true }),
       pull.filter(data => data.value),
       pull.filter(data => data.value.content.type === 'post'),
+      pull.filter(data => data.timestamp < maxTimestamp),
       pull.map(data => new Post(this, data))
     )
     return toIterator(source)

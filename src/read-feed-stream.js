@@ -12,7 +12,6 @@ async function run () {
     await ssb.open()
     for await (const post of ssb.feed()) {
       const {timestamp, channel, text} = post
-      if (timestamp > Date.now() + 5 * 60 * 1000) continue
       console.log(green('Date: ' + new Date(timestamp)))
       const {name} = await post.profile()
       name && console.log(yellow(`Author: ${name}`))
