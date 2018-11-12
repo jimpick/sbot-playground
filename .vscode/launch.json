@@ -19,6 +19,16 @@
         "esm"
       ],
       "program": "${workspaceFolder}/src/read-log.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "read-feed-stream",
+      "runtimeArgs": [
+        "-r",
+        "esm"
+      ],
+      "program": "${workspaceFolder}/src/read-feed-stream.js"
     }
   ]
 }

@@ -1,3 +1,5 @@
+// To run: node -r esm read-log
+
 import ssbClient from 'ssb-client'
 import pull from 'pull-stream'
 import toIterator from 'pull-stream-to-async-iterator'
@@ -18,13 +20,19 @@ async function run () {
           timestamp,
           content: {
             type,
-            text
+            channel,
+            text,
+            reply
           }
         }
       } = value
-      if (type === 'post') {
-        console.log('Date: ' + new Date(timestamp) + '\n')
-        console.log(text + '\n')
+      if (type === 'post' && !reply) {
+        console.log('Date: ' + new Date(timestamp))
+        if (channel) {
+          console.log(`Channel: #${channel}`)
+        }
+        console.log('\n' + text + '\n\n')
+        // console.log(JSON.stringify(value, null, 2)) + '\n\n'
       }
     }
     sbot.close()
