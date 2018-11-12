@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.4.1",
     "delay": "^4.1.0",
     "esm": "^3.0.84",
     "pull-stream-to-async-iterator": "^1.0.0",

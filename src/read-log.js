@@ -4,6 +4,7 @@ import ssbClient from 'ssb-client'
 import pull from 'pull-stream'
 import toIterator from 'pull-stream-to-async-iterator'
 import { promisify } from 'util'
+import chalk from 'chalk'
 
 const openSsbClient = promisify(ssbClient)
 
@@ -27,9 +28,9 @@ async function run () {
         }
       } = value
       if (type === 'post' && !reply) {
-        console.log('Date: ' + new Date(timestamp))
+        console.log(chalk.green('Date: ' + new Date(timestamp)))
         if (channel) {
-          console.log(`Channel: #${channel}`)
+          console.log(chalk.red(`Channel: #${channel}`))
         }
         console.log('\n' + text + '\n\n')
         // console.log(JSON.stringify(value, null, 2)) + '\n\n'

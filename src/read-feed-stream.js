@@ -4,6 +4,7 @@ import ssbClient from 'ssb-client'
 import pull from 'pull-stream'
 import toIterator from 'pull-stream-to-async-iterator'
 import delay from 'delay'
+import chalk from 'chalk'
 import { promisify } from 'util'
 
 const openSsbClient = promisify(ssbClient)
@@ -31,13 +32,13 @@ async function run () {
         }
       } = value
       if (type === 'post') {
-        console.log('Date: ' + new Date(timestamp))
+        console.log(chalk.green('Date: ' + new Date(timestamp)))
         const profile = await getProfile(sbot, author)
         if (profile) {
-          console.log(`Author: ${profile.name}`)
+          console.log(chalk.yellow(`Author: ${profile.name}`))
         }
         if (channel) {
-          console.log(`Channel: #${channel}`)
+          console.log(chalk.red(`Channel: #${channel}`))
         }
         console.log('\n' + text + '\n\n')
         // console.log(JSON.stringify(value, null, 2)) + '\n\n'
