@@ -31,7 +31,7 @@ async function run () {
           }
         }
       } = value
-      if (type === 'post') {
+      if (type === 'post' && timestamp <= Date.now() + 5 * 60 * 1000) {
         console.log(chalk.green('Date: ' + new Date(timestamp)))
         const profile = await getProfile(sbot, author)
         if (profile) {
@@ -51,33 +51,26 @@ async function run () {
   }
 }
 
-function getProfile (sbot, userId) {
-  return new Promise((resolve, reject) => {
-    pull(
-      sbot.links({
-        source: userId,
-        dest: userId,
-        rel: 'about',
-        values: true
-      }),
-      pull.collect(function (err, msgs) {
-        if (err) return reject(err)
-        const profile = msgs.reduce((acc, data) => {
-          const {
-            value: {
-              content: {
-                name
-              }
-            }
-          } = data
-          const result = {...acc}
-          if (name) result.name = name
-          return result
-        }, {})
-        resolve(profile)
-      })
-    )
-  })
+async function getProfile (sbot, userId) {
+  const source = pull(sbot.links({
+    source: userId,
+    dest: userId,
+    rel: 'about',
+    values: true
+  }))
+  let profile = {}
+  const iterator = toIterator(source)
+  for await (const value of iterator) {
+    const {
+      value: {
+        content: {
+          name
+        }
+      }
+    } = value
+    if (name) profile.name = name
+  }
+  return profile
 }
 
 run()
