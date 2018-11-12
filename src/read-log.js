@@ -8,22 +8,24 @@ const openSsbClient = promisify(ssbClient)
 async function run () {
   try {
     const sbot = await openSsbClient()
-    console.log('Jim ready', sbot)
     const whoamiAsync = promisify(sbot.whoami)
     const whoami = await whoamiAsync()
-    console.log('Jim whoami', whoami)
-    const source = pull(
-      sbot.createUserStream({id: whoami.id}),
-      pull.asyncMap((value, cb) => {
-        console.log('Jim sleep 1s')
-        setTimeout(() => {
-          cb(null, value)
-        }, 1000)
-      })
-    )
+    const source = pull(sbot.createUserStream({id: whoami.id}))
     const iterator = toIterator(source)
     for await (const value of iterator) {
-      console.log(JSON.stringify(value, null, 2))
+      const {
+        value: {
+          timestamp,
+          content: {
+            type,
+            text
+          }
+        }
+      } = value
+      if (type === 'post') {
+        console.log('Date: ' + new Date(timestamp) + '\n')
+        console.log(text + '\n')
+      }
     }
     sbot.close()
   } catch (err) {
